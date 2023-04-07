@@ -9,17 +9,29 @@ const middlewareActions = {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: {},
+    isAuthenticated: false,
+    user: null,
+    error: null,
   },
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
+      state.isAuthenticated = true;
+    },
+    unSetUser: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
     },
     ...middlewareActions,
   },
 });
 
-export const { setUser, performLogin, performLogout, performRegistration } =
-  authSlice.actions;
+export const {
+  setUser,
+  unSetUser,
+  performLogin,
+  performLogout,
+  performRegistration,
+} = authSlice.actions;
 
 export default authSlice.reducer;

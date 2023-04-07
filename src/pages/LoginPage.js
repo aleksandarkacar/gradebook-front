@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { performLogin } from "../store/auth/slice";
 
-export const LoginPage = ({ onLogin }) => {
+export const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
@@ -20,7 +20,6 @@ export const LoginPage = ({ onLogin }) => {
       setInvalidCredentials(true);
       alert("invalid credentials");
     }
-    onLogin();
     console.log("logged in successfully");
   };
 

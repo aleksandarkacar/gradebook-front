@@ -1,23 +1,39 @@
-import { BrowserRouter, Redirect, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { GradebooksPage } from "./pages/GradebookPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { performLogout } from "./store/auth/slice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
+import { isAuthenticatedSelector } from "./store/auth/selectors";
 
 export const Router = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
-  );
-
+  // const [isAuthenticated, setIsAuthenticated] = useState(
+  //   !!localStorage.getItem("token")
+  // );
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(isAuthenticatedSelector);
+  const history = useHistory();
+  console.log(isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Redirect the user to the dashboard page
+      history.push("/gradebook");
+    }
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     dispatch(performLogout());
-    setIsAuthenticated(false);
   };
 
   return (
@@ -64,18 +80,10 @@ export const Router = () => {
         </nav>
         <Switch>
           <PublicRoute exact path="/login">
-            <LoginPage
-              onLogin={() => {
-                setIsAuthenticated(true);
-              }}
-            />
+            <LoginPage />
           </PublicRoute>
           <PublicRoute exact path="/register">
-            <RegisterPage
-              onRegister={() => {
-                setIsAuthenticated(true);
-              }}
-            />
+            <RegisterPage />
           </PublicRoute>
         </Switch>
       </BrowserRouter>

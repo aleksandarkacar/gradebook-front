@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { performRegistration } from "../store/auth/slice";
 
-export const RegisterPage = ({ onRegister }) => {
+export const RegisterPage = () => {
   const [credentials, setCredentials] = useState({
     first_name: "",
     last_name: "",
@@ -26,7 +26,6 @@ export const RegisterPage = ({ onRegister }) => {
     } catch {
       alert("registration error");
     }
-    onRegister();
   };
 
   return (

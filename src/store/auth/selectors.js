@@ -1,1 +1,2 @@
-export const userSelector = (state) => state.user;
+export const userSelector = (state) => state.auth.user;
+export const isAuthenticatedSelector = (state) => state.auth.isAuthenticated;

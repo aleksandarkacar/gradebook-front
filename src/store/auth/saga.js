@@ -4,6 +4,7 @@ import {
   performLogout,
   performRegistration,
   setUser,
+  unSetUser,
 } from "./slice";
 import authService from "../../services/AuthService";
 
@@ -19,6 +20,7 @@ function* loginUserHandler({ payload }) {
 function* logoutUserHandler() {
   try {
     yield call(authService.logout);
+    yield put(unSetUser());
   } catch (error) {
     console.log(error);
   }
