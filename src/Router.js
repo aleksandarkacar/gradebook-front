@@ -1,20 +1,24 @@
 import {
   BrowserRouter,
-  Redirect,
-  Route,
   Switch,
   Link,
+  Redirect,
   useHistory,
 } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
-import { GradebooksPage } from "./pages/GradebookPage";
+import { HomePage } from "./pages/HomePage";
 import { useDispatch, useSelector } from "react-redux";
 import { performLogout } from "./store/auth/slice";
 import { useEffect, useState } from "react";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import { isAuthenticatedSelector } from "./store/auth/selectors";
+import { MyGradebookPage } from "./pages/MyGradebookPage";
+import { AllProfessorsPage } from "./pages/AllProfessorsPage";
+import { AddGradebookPage } from "./pages/AddGradebookPage";
+import { SingleProfessorPage } from "./pages/SingleProfessorPage";
+import { SingleGradebookPage } from "./pages/SingleGradebookPage";
 
 export const Router = () => {
   const dispatch = useDispatch();
@@ -58,22 +62,22 @@ export const Router = () => {
             )}
             {isAuthenticated && (
               <li>
-                <Link to="/">Gradebooks</Link>
+                <Link to={"/"}>Gradebooks</Link>
               </li>
             )}
             {isAuthenticated && (
               <li>
-                <Link to="/teachers">All Professors</Link>
+                <Link to={"/teachers"}>All Professors</Link>
               </li>
             )}
             {isAuthenticated && (
               <li>
-                <Link to="/my-gradebook">My Gradebook</Link>
+                <Link to={"/my-gradebook"}>My Gradebook</Link>
               </li>
             )}
             {isAuthenticated && (
               <li>
-                <Link to="/gradebooks/create">My Gradebook</Link>
+                <Link to={"/gradebooks/create"}>Add Gradebook</Link>
               </li>
             )}
             {isAuthenticated && (
@@ -84,14 +88,32 @@ export const Router = () => {
           </ul>
         </nav>
         <Switch>
-          <PublicRoute isAuthenticated={isAuthenticated} exact path="/login">
+          <PublicRoute exact path={"/login"}>
             <LoginPage />
           </PublicRoute>
-          <PublicRoute exact path="/register">
+          <PublicRoute exact path={"/register"}>
             <RegisterPage />
           </PublicRoute>
-          <PrivateRoute>
-            <GradebooksPage />
+          <PrivateRoute exact path={"/my-gradebook"}>
+            <MyGradebookPage />
+          </PrivateRoute>
+          <PrivateRoute path={"/"}>
+            <HomePage />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/gradebooks"}>
+            <Redirect to={"/"} />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/gradebooks/create"}>
+            <AddGradebookPage />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/gradebooks/:id"}>
+            <SingleGradebookPage />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/teachers"}>
+            <AllProfessorsPage />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/teachers/:id"}>
+            <SingleProfessorPage />
           </PrivateRoute>
         </Switch>
       </BrowserRouter>

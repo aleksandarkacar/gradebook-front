@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { performLogin } from "../store/auth/slice";
 
 export const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [invalidCredentials, setInvalidCredentials] = useState(false);
-
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleLoginSubmit = (e) => {

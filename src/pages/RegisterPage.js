@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { performRegistration } from "../store/auth/slice";
 
 export const RegisterPage = () => {
@@ -14,7 +13,6 @@ export const RegisterPage = () => {
   });
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const handleRegisterSubmit = (e) => {
