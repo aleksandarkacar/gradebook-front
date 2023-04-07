@@ -97,7 +97,7 @@ export const Router = () => {
           <PrivateRoute exact path={"/my-gradebook"}>
             <MyGradebookPage />
           </PrivateRoute>
-          <PrivateRoute path={"/"}>
+          <PrivateRoute exact path={"/"}>
             <HomePage />
           </PrivateRoute>
           <PrivateRoute exact path={"/gradebooks"}>
