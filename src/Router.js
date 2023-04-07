@@ -17,23 +17,27 @@ import PublicRoute from "./components/PublicRoute";
 import { isAuthenticatedSelector } from "./store/auth/selectors";
 
 export const Router = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(
-  //   !!localStorage.getItem("token")
-  // );
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(isAuthenticatedSelector);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+  const authenticationChange = useSelector(isAuthenticatedSelector);
   const history = useHistory();
-  console.log(isAuthenticated);
 
   useEffect(() => {
+    setIsAuthenticated(!!localStorage.getItem("token"));
+    console.log(isAuthenticated);
     if (isAuthenticated) {
       // Redirect the user to the dashboard page
       history.push("/gradebook");
+    } else {
+      history.push("/login");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, authenticationChange]);
 
   const handleLogout = () => {
     dispatch(performLogout());
+    history.push("/");
   };
 
   return (
@@ -79,12 +83,15 @@ export const Router = () => {
           </ul>
         </nav>
         <Switch>
-          <PublicRoute exact path="/login">
+          <PublicRoute isAuthenticated={isAuthenticated} exact path="/login">
             <LoginPage />
           </PublicRoute>
           <PublicRoute exact path="/register">
             <RegisterPage />
           </PublicRoute>
+          <PrivateRoute>
+            <GradebooksPage />
+          </PrivateRoute>
         </Switch>
       </BrowserRouter>
     </div>

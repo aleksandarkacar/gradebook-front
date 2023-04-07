@@ -8,7 +8,6 @@ class AuthService {
     const response = await this.axios.post("/login", credentials);
     const token = response.data.token;
     localStorage.setItem("token", token);
-    console.log(response.data);
     return response.data.user;
   };
 
@@ -16,7 +15,6 @@ class AuthService {
     const response = await this.axios.post("/register", credentials);
     const token = response.data.token;
     localStorage.setItem("token", token);
-    console.log(response.data);
     return response.data.user;
   };
 
