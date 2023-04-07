@@ -32,8 +32,7 @@ export const Router = () => {
     setIsAuthenticated(!!localStorage.getItem("token"));
     console.log(isAuthenticated);
     if (isAuthenticated) {
-      // Redirect the user to the dashboard page
-      history.push("/gradebook");
+      history.push("/");
     } else {
       history.push("/login");
     }
