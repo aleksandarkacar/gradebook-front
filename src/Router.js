@@ -37,6 +37,7 @@ export const Router = () => {
 
   const handleLogout = () => {
     dispatch(performLogout());
+    setIsAuthenticated(false);
     history.push("/");
   };
 
