@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { allTeachersSelector } from "../store/teachers/selectors";
 import { useEffect } from "react";
 import { performGetAllTeachers } from "../store/teachers/slice";
+import { TeacherCard } from "../components/TeacherCard";
 
 export const AllProfessorsPage = () => {
   const teachers = useSelector(allTeachersSelector);
@@ -19,7 +20,12 @@ export const AllProfessorsPage = () => {
 
   return (
     <div>
-      <h1>{JSON.stringify(teachers)}</h1>
+      <h1>AllProfessorsPage:</h1>
+      <div className="card-container">
+        {teachers.map((teacher) => (
+          <TeacherCard key={teacher.id} teacher={teacher} />
+        ))}
+      </div>
     </div>
   );
 };

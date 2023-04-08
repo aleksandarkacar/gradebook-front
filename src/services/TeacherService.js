@@ -14,6 +14,11 @@ class TeacherService {
     return response.data;
   };
 
+  getAvailable = async () => {
+    const response = await this.axios.get("/users/available");
+    return response.data;
+  };
+
   search = async (first_name, last_name) => {
     const response = await this.axios.get(
       `/users?first_name=${first_name}&last_name=${last_name}`

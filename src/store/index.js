@@ -4,12 +4,14 @@ import createSagaMiddleware from "@redux-saga/core";
 import sagas from "./sagas";
 import authReducer from "./auth/slice";
 import teacherReducer from "./teachers/slice";
+import gradebookReducer from "./gradebooks/slice";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    gradebook: gradebookReducer,
     teacher: teacherReducer,
   },
   middleware: (getDefaultMiddleware) => {
