@@ -29,13 +29,20 @@ export const AddStudentPage = () => {
 
   const handleStudentSubmit = (e) => {
     e.preventDefault();
-    dispatch(performAddStudent(newStudent));
-    history.goBack();
-    if (lastPage) {
-      history.push(lastPage);
-    } else {
-      history.push(`/gradebooks/${params.id}`); //TODO history ponekad ne pushuje ne znam zasto, samo ga vrati na istu AddStudentsPage stranu
-    }
+    dispatch(
+      performAddStudent({
+        data: newStudent,
+        redirect: () => {
+          history.goBack();
+        },
+      })
+    );
+    // history.goBack();
+    // if (lastPage) {
+    //   history.push(lastPage);
+    // } else {
+    //   history.push(`/gradebooks/${params.id}`); //TODO history ponekad ne pushuje ne znam zasto, samo ga vrati na istu AddStudentsPage stranu
+    // }
   };
 
   console.log(history.location.state);

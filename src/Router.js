@@ -33,7 +33,7 @@ export const Router = () => {
     setIsAuthenticated(!!localStorage.getItem("token"));
     console.log(isAuthenticated);
     if (isAuthenticated) {
-      history.push("/");
+      // history.push("/");
     } else {
       history.push("/login");
     }

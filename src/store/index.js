@@ -15,7 +15,10 @@ const store = configureStore({
     teacher: teacherReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return [...getDefaultMiddleware(), sagaMiddleware];
+    return [
+      ...getDefaultMiddleware({ serializableCheck: false }),
+      sagaMiddleware,
+    ];
   },
 });
 

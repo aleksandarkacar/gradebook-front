@@ -52,7 +52,9 @@ function* addGradebookHandler({ payload }) {
 
 function* addStudentHandler({ payload }) {
   try {
-    yield call(gradebookService.addStudent, payload);
+    console.log(payload);
+    yield call(gradebookService.addStudent, payload.data);
+    payload.redirect();
   } catch (err) {
     console.log(err);
   }
