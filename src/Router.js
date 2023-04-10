@@ -19,6 +19,7 @@ import { AllProfessorsPage } from "./pages/AllProfessorsPage";
 import { AddGradebookPage } from "./pages/AddGradebookPage";
 import { SingleProfessorPage } from "./pages/SingleProfessorPage";
 import { SingleGradebookPage } from "./pages/SingleGradebookPage";
+import { AddStudentPage } from "./pages/AddStudentsPage";
 
 export const Router = () => {
   const dispatch = useDispatch();
@@ -47,44 +48,42 @@ export const Router = () => {
   return (
     <div>
       <BrowserRouter>
-        <nav>
-          <ul>
-            {!isAuthenticated && (
-              <li>
-                <Link to={"/login"}>Login</Link>
-              </li>
-            )}
-            {!isAuthenticated && (
-              <li>
-                <Link to={"/register"}>Register</Link>
-              </li>
-            )}
-            {isAuthenticated && (
-              <li>
-                <Link to={"/"}>Gradebooks</Link>
-              </li>
-            )}
-            {isAuthenticated && (
-              <li>
-                <Link to={"/teachers"}>All Professors</Link>
-              </li>
-            )}
-            {isAuthenticated && (
-              <li>
-                <Link to={"/my-gradebook"}>My Gradebook</Link>
-              </li>
-            )}
-            {isAuthenticated && (
-              <li>
-                <Link to={"/gradebooks/create"}>Add Gradebook</Link>
-              </li>
-            )}
-            {isAuthenticated && (
-              <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
-            )}
-          </ul>
+        <nav className="navbar">
+          {!isAuthenticated && (
+            <Link to={"/login"}>
+              <button class="button-link">Login</button>
+            </Link>
+          )}
+          {!isAuthenticated && (
+            <Link to={"/register"}>
+              <button class="button-link">Register</button>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link to={"/"}>
+              <button class="button-link">Gradebooks </button>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link to={"/teachers"}>
+              <button class="button-link">All Professors</button>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link to={"/my-gradebook"}>
+              <button class="button-link">My Gradebook</button>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <Link to={"/gradebooks/create"}>
+              <button class="button-link">Add Gradebook</button>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <button class="button-link" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
         </nav>
         <Switch>
           <PublicRoute exact path={"/login"}>
@@ -113,6 +112,9 @@ export const Router = () => {
           </PrivateRoute>
           <PrivateRoute exact path={"/teachers/:id"}>
             <SingleProfessorPage />
+          </PrivateRoute>
+          <PrivateRoute path={"/gradebooks/:id/students/create"}>
+            <AddStudentPage />
           </PrivateRoute>
         </Switch>
       </BrowserRouter>

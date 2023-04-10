@@ -19,8 +19,28 @@ class GradebookService {
     return response.data;
   };
 
+  myGradebook = async () => {
+    const response = await this.axios.get("/mygradebook");
+    return response.data;
+  };
+
   search = async (name) => {
     const response = await this.axios.get(`/gradebooks?name=${name}`);
+    return response.data;
+  };
+
+  addStudent = async (student) => {
+    const response = await this.axios.post(`/students`, student);
+    return response.data;
+  };
+
+  addComment = async (comment) => {
+    const response = await this.axios.post(`/comments`, comment);
+    return response.data;
+  };
+
+  deleteComment = async (commentId) => {
+    const response = await this.axios.delete(`/comments/${commentId}`);
     return response.data;
   };
 }

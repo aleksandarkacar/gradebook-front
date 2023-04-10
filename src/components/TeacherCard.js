@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React from "react";
 
 export const TeacherCard = ({ teacher }) => {
@@ -11,9 +12,17 @@ export const TeacherCard = ({ teacher }) => {
       />
       <div className="card-body">
         <h5 className="card-title">
-          {teacher.first_name} {teacher.last_name}
+          <Link to={`/teachers/${teacher.id}`}>
+            <button class="button-link">
+              {teacher.first_name} {teacher.last_name}
+            </button>
+          </Link>
         </h5>
-        <p className="card-text">{teacher.email}</p>
+        {teacher.gradebook ? (
+          <div>{teacher.gradebook.name}</div>
+        ) : (
+          <div>Teacher is available</div>
+        )}
       </div>
     </div>
   );

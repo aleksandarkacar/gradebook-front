@@ -15,13 +15,14 @@ const teachersSlice = createSlice({
         name: "",
       },
     ],
+    singleTeacher: [],
   },
   reducers: {
     setAllTeachers: (state, action) => {
       state.data = action.payload;
     },
     setSingleTeacher: (state, action) => {
-      state.data = action.payload;
+      state.singleTeacher = action.payload;
     },
     setAvailableTeachers: (state, action) => {
       state.available = action.payload;
