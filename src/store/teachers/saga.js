@@ -8,14 +8,16 @@ import {
   setSingleTeacher,
   setAvailableTeachers,
 } from "./slice";
+import { setErrors } from "../errors/slice";
 
 function* getAllTeachersHandler() {
   try {
     const teachers = yield call(teacherService.getAll);
     console.log(teachers);
     yield put(setAllTeachers(teachers));
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -26,6 +28,7 @@ function* getSingleTeacherHandler({ payload }) {
     yield put(setSingleTeacher(teacher));
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -36,6 +39,7 @@ function* getAvailableTeachersHandler() {
     yield put(setAvailableTeachers(availableTeachers));
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 

@@ -7,6 +7,7 @@ import {
   unSetUser,
 } from "./slice";
 import authService from "../../services/AuthService";
+import { setErrors } from "../errors/slice";
 
 function* loginUserHandler({ payload }) {
   try {
@@ -14,6 +15,7 @@ function* loginUserHandler({ payload }) {
     yield put(setUser(user));
   } catch (error) {
     console.log(error);
+    yield put(setErrors(error));
   }
 }
 
@@ -23,6 +25,7 @@ function* logoutUserHandler() {
     yield put(unSetUser());
   } catch (error) {
     console.log(error);
+    yield put(setErrors(error));
   }
 }
 
@@ -32,6 +35,7 @@ function* registerUserHandler({ payload }) {
     yield put(setUser(user));
   } catch (error) {
     console.log(error);
+    yield put(setErrors(error));
   }
 }
 

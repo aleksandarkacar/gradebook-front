@@ -48,7 +48,10 @@ export const DetailedGradebookCard = ({ gradebook }) => {
   };
 
   const handleDeleteComment = (id) => {
-    dispatch(performDeleteComment(id));
+    const descision = window.confirm("Are you sure you want to delete");
+    if (descision) {
+      dispatch(performDeleteComment(id));
+    }
   };
 
   console.log(gradebook);

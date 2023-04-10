@@ -1,33 +1,39 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { performRegistration } from "../store/auth/slice";
+import { errorsSelector } from "../store/errors/selectors";
+import { useEffect } from "react";
+import { performResetErrors } from "../store/errors/slice";
 
 export const RegisterPage = () => {
-  const [credentials, setCredentials] = useState({
-    first_name: "",
-    last_name: "",
-    img_url: "",
-    email: "",
-    password: "",
-    terms_and_conditions: false,
-  });
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const [credentials, setCredentials] = useState(
+    {
+      first_name: "",
+      last_name: "",
+      img_url: "",
+      email: "",
+      password: "",
+      terms_and_conditions: false,
+    },
+    []
+  );
 
+  const errors = useSelector(errorsSelector);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(performResetErrors());
+  }, []);
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    setInvalidCredentials(false);
-
-    try {
-      dispatch(performRegistration(credentials));
-    } catch {
-      alert("registration error");
-    }
+    dispatch(performRegistration(credentials));
   };
 
   return (
     <div>
+      {errors ? <p>{JSON.stringify(errors.response.data.message)}</p> : null}
+      <h1></h1>
       <h2>Register</h2>
       <form
         style={{
@@ -48,6 +54,7 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, first_name: target.value })
           }
         />
+        {errors?.first_name && <p>{errors.first_name}</p>}
         <input
           required
           value={credentials.last_name}
@@ -56,6 +63,7 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, last_name: target.value })
           }
         />
+        {errors?.last_name && <p>{errors.last_name}</p>}
         <div style={{ maxWidth: "500px", margin: "0 auto" }}>
           <input
             required
@@ -71,6 +79,7 @@ export const RegisterPage = () => {
             }
           />
         </div>
+        {errors?.img_url && <p>{errors.img_url}</p>}
         <input
           required
           value={credentials.email}
@@ -80,6 +89,7 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, email: target.value })
           }
         />
+        {errors?.email && <p>{errors.email}</p>}
         <input
           required
           value={credentials.password}
@@ -89,6 +99,7 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, password: target.value })
           }
         />
+        {errors?.password && <p>{errors.password}</p>}
         <fieldset>
           <legend>
             Check this box to confirm that you accept the terms and conditions
@@ -107,10 +118,9 @@ export const RegisterPage = () => {
             <label>{credentials.terms_and_conditions}</label>
           </div>
         </fieldset>
-        {invalidCredentials && (
-          <p style={{ color: "red" }}>Invalid credentials</p>
-        )}
-        <button>Register</button>
+        {errors?.terms_and_conditions && <p>{errors.terms_and_conditions}</p>}
+
+        <button type="submit">Register</button>
       </form>
     </div>
   );

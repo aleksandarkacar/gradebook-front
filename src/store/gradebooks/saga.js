@@ -13,14 +13,16 @@ import {
   performDeleteComment,
   removeComment,
 } from "./slice";
+import { setErrors } from "../errors/slice";
 
 function* getAllGradebooksHandler() {
   try {
     const gradebooks = yield call(gradebookService.getAll);
     console.log(gradebooks);
     yield put(setAllGradebooks(gradebooks));
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -30,6 +32,7 @@ function* getSingleGradebookHandler({ payload }) {
     yield put(setSingleGradebook(gradebook));
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -39,6 +42,7 @@ function* getMyGradebookHandler() {
     yield put(setSingleGradebook(gradebook));
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -47,6 +51,7 @@ function* addGradebookHandler({ payload }) {
     yield call(gradebookService.add, payload);
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -57,6 +62,7 @@ function* addStudentHandler({ payload }) {
     payload.redirect();
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -66,6 +72,7 @@ function* addCommentHandler({ payload }) {
     yield put(pushNewComment(comment));
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 
@@ -75,6 +82,7 @@ function* deleteCommentHandeler({ payload }) {
     yield put(removeComment(payload));
   } catch (err) {
     console.log(err);
+    yield put(setErrors(err));
   }
 }
 

@@ -5,6 +5,7 @@ import sagas from "./sagas";
 import authReducer from "./auth/slice";
 import teacherReducer from "./teachers/slice";
 import gradebookReducer from "./gradebooks/slice";
+import errorReducer from "./errors/slice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,6 +14,7 @@ const store = configureStore({
     auth: authReducer,
     gradebook: gradebookReducer,
     teacher: teacherReducer,
+    errors: errorReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return [
