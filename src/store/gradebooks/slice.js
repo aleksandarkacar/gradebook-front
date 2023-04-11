@@ -12,6 +12,7 @@ const middlewareActions = {
   performDeleteStudent: () => {},
   performDeleteComment: () => {},
   performDeleteGradebook: () => {},
+  performSearchGradebooks: () => {},
 };
 
 const gradebooksSlice = createSlice({
@@ -88,6 +89,7 @@ export const {
   resetSingleGradebook,
   performGetMoreGradebooks,
   pushMoreGradebooks,
+  performSearchGradebooks,
 } = gradebooksSlice.actions;
 
 export default gradebooksSlice.reducer;

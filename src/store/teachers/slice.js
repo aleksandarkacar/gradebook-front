@@ -4,6 +4,7 @@ const middlewareActions = {
   performGetAllTeachers: () => {},
   performGetSingleTeacher: () => {},
   performGetAvailableTeachers: () => {},
+  performSearchTeachers: () => {},
 };
 
 const teachersSlice = createSlice({
@@ -38,6 +39,7 @@ export const {
   performGetAllTeachers,
   performGetSingleTeacher,
   performGetAvailableTeachers,
+  performSearchTeachers,
 } = teachersSlice.actions;
 
 export default teachersSlice.reducer;

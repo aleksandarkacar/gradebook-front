@@ -19,7 +19,10 @@ export const TeacherCard = ({ teacher }) => {
           </Link>
         </h5>
         {teacher.gradebook ? (
-          <div>Gradebook: {teacher.gradebook.name}</div>
+          <div>
+            Owns Gradebook: {teacher.gradebook.name} <br></br> Has{" "}
+            {teacher.gradebook.students.length} Students
+          </div>
         ) : (
           <div>Teacher is available</div>
         )}

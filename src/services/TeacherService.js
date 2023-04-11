@@ -20,6 +20,7 @@ class TeacherService {
   };
 
   search = async (first_name, last_name) => {
+    console.log(first_name, last_name);
     const response = await this.axios.get(
       `/users?first_name=${first_name}&last_name=${last_name}`
     );

@@ -11,7 +11,9 @@ export const GradebookCard = ({ gradebook }) => {
             <p className="card-title">
               Professor: {gradebook.user.first_name} {gradebook.user.last_name}
             </p>
-          ) : null}
+          ) : (
+            <p className="card-title">No Professor Assigned</p>
+          )}
         </div>
       </div>
       <Link to={`/gradebooks/${gradebook.id}`}>

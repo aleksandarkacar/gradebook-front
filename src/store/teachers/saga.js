@@ -7,6 +7,7 @@ import {
   setAllTeachers,
   setSingleTeacher,
   setAvailableTeachers,
+  performSearchTeachers,
 } from "./slice";
 import { setErrors } from "../errors/slice";
 
@@ -14,6 +15,21 @@ function* getAllTeachersHandler() {
   try {
     const teachers = yield call(teacherService.getAll);
     console.log(teachers);
+    yield put(setAllTeachers(teachers));
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
+  }
+}
+
+function* filterTeachersHandler({ payload }) {
+  try {
+    console.log(payload);
+    const teachers = yield call(
+      teacherService.search,
+      payload.filterFirstName,
+      payload.filterLastName
+    );
     yield put(setAllTeachers(teachers));
   } catch (err) {
     console.log(err);
@@ -45,6 +61,10 @@ function* getAvailableTeachersHandler() {
 
 export function* watchGetAllTeachers() {
   yield takeLatest(performGetAllTeachers.type, getAllTeachersHandler);
+}
+
+export function* watchfilterTeachers() {
+  yield takeLatest(performSearchTeachers.type, filterTeachersHandler);
 }
 
 export function* watchGetSingleTeacher() {

@@ -19,6 +19,7 @@ import {
   performDeleteGradebook,
   resetSingleGradebook,
   pushMoreGradebooks,
+  performSearchGradebooks,
 } from "./slice";
 import { setErrors } from "../errors/slice";
 
@@ -38,6 +39,18 @@ function* getMoreGradebooksHandler({ payload }) {
     const gradebooks = yield call(gradebookService.getMore, payload);
     console.log(gradebooks.data);
     yield put(pushMoreGradebooks(gradebooks.data));
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
+  }
+}
+
+function* searchGradebooksHandler({ payload }) {
+  try {
+    console.log(payload);
+    const gradebooks = yield call(gradebookService.search, payload);
+    console.log(gradebooks);
+    yield put(setAllGradebooks(gradebooks));
   } catch (err) {
     console.log(err);
     yield put(setErrors(err));
@@ -144,6 +157,10 @@ export function* watchGetAllGradebooks() {
 
 export function* watchGetMoreGradebooks() {
   yield takeLatest(performGetMoreGradebooks.type, getMoreGradebooksHandler);
+}
+
+export function* watchSearchGradebooks() {
+  yield takeLatest(performSearchGradebooks.type, searchGradebooksHandler);
 }
 
 export function* watchGetSingleGradebook() {
