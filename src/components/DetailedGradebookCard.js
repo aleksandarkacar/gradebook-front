@@ -24,6 +24,11 @@ export const DetailedGradebookCard = ({ gradebook }) => {
     return () => dispatch(performResetErrors());
   }, []);
 
+  useEffect(() => {}, [errors]);
+
+  if (errors?.response?.status == 404) {
+    return <h2>You do not have a gradebook</h2>;
+  }
   const userId = localStorage.getItem("userId");
 
   const createdAt = new Date(gradebook.created_at).toLocaleDateString("en-US", {
@@ -61,11 +66,6 @@ export const DetailedGradebookCard = ({ gradebook }) => {
   console.log(errors?.response.status);
 
   if (gradebook.length === 0) {
-    if (errors?.response.status === 404) {
-      return (
-        <h2 style={{ listStyleType: "none" }}>You do not have a gradebook</h2>
-      );
-    }
     return <p>Loading...</p>;
   }
 
