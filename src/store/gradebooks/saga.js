@@ -15,6 +15,8 @@ import {
   performEditGradebook,
   performDeleteStudent,
   removeStudent,
+  performDeleteGradebook,
+  resetSingleGradebook,
 } from "./slice";
 import { setErrors } from "../errors/slice";
 
@@ -111,6 +113,18 @@ function* deleteStudentHandeler({ payload }) {
   }
 }
 
+function* deleteGradebookHandeler({ payload }) {
+  try {
+    console.log(payload.data);
+    yield call(gradebookService.delete, payload.data);
+    yield put(resetSingleGradebook());
+    payload.redirect();
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
+  }
+}
+
 export function* watchGetAllGradebooks() {
   yield takeLatest(performGetAllGradebooks.type, getAllGradebooksHandler);
 }
@@ -145,4 +159,8 @@ export function* watchDeleteComment() {
 
 export function* watchDeleteStudent() {
   yield takeLatest(performDeleteStudent.type, deleteStudentHandeler);
+}
+
+export function* watchDeleteGradebook() {
+  yield takeLatest(performDeleteGradebook.type, deleteGradebookHandeler);
 }

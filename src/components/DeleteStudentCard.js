@@ -4,7 +4,9 @@ import { performDeleteStudent } from "../store/gradebooks/slice";
 export const DeleteStudentCard = ({ student }) => {
   const dispatch = useDispatch();
   const handleDeleteStudent = () => {
-    const descision = window.confirm("Are you sure you want to delete");
+    const descision = window.confirm(
+      "Are you sure you want to delete the student"
+    );
     if (descision) {
       dispatch(performDeleteStudent(student.id));
     }

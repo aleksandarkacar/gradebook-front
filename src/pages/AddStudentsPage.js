@@ -32,14 +32,16 @@ export const AddStudentPage = () => {
 
   const handleStudentSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      performAddStudent({
-        data: newStudent,
-        redirect: () => {
-          history.goBack();
-        },
-      })
-    );
+    if (history.state.from){
+      dispatch(
+        performAddStudent({
+          data: newStudent,
+          redirect: () => {
+            history.push();
+          },
+        })
+      );
+    }
     // history.goBack();
     // if (lastPage) {
     //   history.push(lastPage);

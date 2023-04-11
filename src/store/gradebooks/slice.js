@@ -10,6 +10,7 @@ const middlewareActions = {
   performEditGradebook: () => {},
   performDeleteStudent: () => {},
   performDeleteComment: () => {},
+  performDeleteGradebook: () => {},
 };
 
 const gradebooksSlice = createSlice({
@@ -24,6 +25,9 @@ const gradebooksSlice = createSlice({
     },
     setSingleGradebook: (state, action) => {
       state.singleGradebook = action.payload;
+    },
+    resetSingleGradebook: (state) => {
+      state.singleGradebook = [];
     },
     pushNewGradebook: (state, action) => {
       state.data.push(action.payload);
@@ -75,6 +79,8 @@ export const {
   performEditGradebook,
   performDeleteStudent,
   removeStudent,
+  performDeleteGradebook,
+  resetSingleGradebook,
 } = gradebooksSlice.actions;
 
 export default gradebooksSlice.reducer;

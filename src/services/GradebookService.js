@@ -19,6 +19,12 @@ class GradebookService {
     return response.data;
   };
 
+  delete = async (id) => {
+    console.log(id);
+    const response = await this.axios.delete(`/gradebooks/${id}`);
+    return response.data;
+  };
+
   myGradebook = async () => {
     const response = await this.axios.get("/mygradebook");
     return response.data;

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import {
   performAddComment,
   performDeleteComment,
+  performDeleteGradebook,
 } from "../store/gradebooks/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { errorsSelector } from "../store/errors/selectors";
@@ -14,7 +15,6 @@ export const DetailedGradebookCard = ({ gradebook }) => {
   const [comment, setComment] = useState({
     body: "",
   });
-  console.log(gradebook.id, comment);
   const [commentLength, setCommentLength] = useState(0);
   const history = useHistory();
   const errors = useSelector(errorsSelector);
@@ -57,9 +57,27 @@ export const DetailedGradebookCard = ({ gradebook }) => {
   };
 
   const handleDeleteComment = (id) => {
-    const descision = window.confirm("Are you sure you want to delete");
+    const descision = window.confirm(
+      "Are you sure you want to delete the comment"
+    );
     if (descision) {
       dispatch(performDeleteComment(id));
+    }
+  };
+
+  const handleDeleteGradebook = () => {
+    const descision = window.confirm(
+      "Are you sure you want to delete the gradebook"
+    );
+    if (descision) {
+      dispatch(
+        performDeleteGradebook({
+          data: gradebook.id,
+          redirect: () => {
+            history.push("/");
+          },
+        })
+      );
     }
   };
 
@@ -71,9 +89,9 @@ export const DetailedGradebookCard = ({ gradebook }) => {
 
   return (
     <div style={{ marginBottom: "250px" }}>
-      <div style={{ display: "flex", justifyContent: "flex-start" }}>
-        {gradebook.user.id == userId ? (
-          <div>
+      {gradebook.user.id == userId ? (
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: "auto" }}>
             <button class="button-link" onClick={() => goToAddStudents()}>
               Add Students
             </button>
@@ -84,8 +102,13 @@ export const DetailedGradebookCard = ({ gradebook }) => {
               Edit Gradebook
             </button>
           </div>
-        ) : null}
-      </div>
+          <div style={{ justifyContent: "right" }}>
+            <button class="button-link" onClick={() => handleDeleteGradebook()}>
+              Delete Gradebook
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       <div>
         <h2>Gradebook Details</h2>
