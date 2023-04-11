@@ -35,7 +35,7 @@ export const AddGradebookPage = () => {
       performAddGradebook({
         data: newGradebook,
         redirect: () => {
-          history.goBack();
+          history.push("/");
         },
       })
     );

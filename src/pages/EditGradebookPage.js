@@ -71,7 +71,7 @@ export const EditGradebookPage = () => {
 
   return (
     <div>
-      {localStorage.getItem("userId") == editedGradebook.user_id ? (
+      {localStorage.getItem("userId") == gradebook.user_id ? (
         <div>
           <h1>Edit Gradebook Page:</h1>
           <div className="card-container">

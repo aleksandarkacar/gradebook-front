@@ -12,6 +12,7 @@ export const AddStudentPage = () => {
   const [newStudent, setNewStudent] = useState({
     first_name: "",
     last_name: "",
+    img_url: "",
     gradebook_id: params.id,
   });
 
@@ -32,16 +33,27 @@ export const AddStudentPage = () => {
 
   const handleStudentSubmit = (e) => {
     e.preventDefault();
-    if (history.state.from){
+    // console.log(history.location.state.from);
+    const from = history?.location?.state?.from;
+    if (from == undefined) {
       dispatch(
         performAddStudent({
           data: newStudent,
           redirect: () => {
-            history.push();
+            history.push(`/gradebooks/${params.id}`);
           },
         })
       );
     }
+    dispatch(
+      performAddStudent({
+        data: newStudent,
+        redirect: () => {
+          history.push(from);
+        },
+      })
+    );
+
     // history.goBack();
     // if (lastPage) {
     //   history.push(lastPage);
@@ -88,6 +100,21 @@ export const AddStudentPage = () => {
                   {errors?.response?.data?.errors?.last_name && (
                     <li style={{ color: "red", listStyleType: "none" }}>
                       *{errors.response.data.errors.last_name[0]}*
+                    </li>
+                  )}
+
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newStudent.img_url}
+                    placeholder="img url"
+                    onChange={({ target }) =>
+                      setNewStudent({ ...newStudent, img_url: target.value })
+                    }
+                  />
+                  {errors?.response?.data?.errors?.img_url && (
+                    <li style={{ color: "red", listStyleType: "none" }}>
+                      *{errors.response.data.errors.img_url[0]}*
                     </li>
                   )}
                 </div>
