@@ -96,6 +96,12 @@ export const AddGradebookPage = () => {
               <button type="submit" className="btn btn-primary">
                 Add Gradebook
               </button>
+              <button
+                onClick={() => history.push("/")}
+                className="btn btn-primary"
+              >
+                Cancel
+              </button>
             </form>
           </div>
         </div>

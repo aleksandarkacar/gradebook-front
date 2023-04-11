@@ -52,36 +52,36 @@ export const Router = () => {
         <nav className="navbar">
           {!isAuthenticated && (
             <Link to={"/login"}>
-              <button class="button-link">Login Page</button>
+              <button className="button-link">Login Page</button>
             </Link>
           )}
           {!isAuthenticated && (
             <Link to={"/register"}>
-              <button class="button-link">Register Page</button>
+              <button className="button-link">Register Page</button>
             </Link>
           )}
           {isAuthenticated && (
             <Link to={"/"}>
-              <button class="button-link">Gradebooks </button>
+              <button className="button-link">Gradebooks </button>
             </Link>
           )}
           {isAuthenticated && (
             <Link to={"/teachers"}>
-              <button class="button-link">All Professors</button>
+              <button className="button-link">All Professors</button>
             </Link>
           )}
           {isAuthenticated && (
             <Link to={"/my-gradebook"}>
-              <button class="button-link">My Gradebook</button>
+              <button className="button-link">My Gradebook</button>
             </Link>
           )}
           {isAuthenticated && (
             <Link to={"/gradebooks/create"}>
-              <button class="button-link">Add Gradebook</button>
+              <button className="button-link">Add Gradebook</button>
             </Link>
           )}
           {isAuthenticated && (
-            <button class="button-link" onClick={handleLogout}>
+            <button className="button-link" onClick={handleLogout}>
               Logout
             </button>
           )}
