@@ -9,6 +9,13 @@ class GradebookService {
     return response.data;
   };
 
+  getMore = async (currentPage) => {
+    const response = await this.axios.get(
+      `/gradebooks?page=${currentPage + 1}`
+    );
+    return response.data;
+  };
+
   get = async (id) => {
     const response = await this.axios.get(`/gradebooks/${id}`);
     return response.data;

@@ -19,7 +19,7 @@ export const TeacherCard = ({ teacher }) => {
           </Link>
         </h5>
         {teacher.gradebook ? (
-          <div>{teacher.gradebook.name}</div>
+          <div>Gradebook: {teacher.gradebook.name}</div>
         ) : (
           <div>Teacher is available</div>
         )}

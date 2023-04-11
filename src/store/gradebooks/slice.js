@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const middlewareActions = {
   performGetAllGradebooks: () => {},
+  performGetMoreGradebooks: () => {},
   performGetSingleGradebook: () => {},
   performGetMyGradebook: () => {},
   performAddGradebook: () => {},
@@ -31,6 +32,10 @@ const gradebooksSlice = createSlice({
     },
     pushNewGradebook: (state, action) => {
       state.data.push(action.payload);
+    },
+    pushMoreGradebooks: (state, action) => {
+      console.log(action.payload);
+      state.data.data = [...state.data.data, ...action.payload];
     },
     pushNewComment: (state, action) => {
       state.singleGradebook.comments.push({
@@ -81,6 +86,8 @@ export const {
   removeStudent,
   performDeleteGradebook,
   resetSingleGradebook,
+  performGetMoreGradebooks,
+  pushMoreGradebooks,
 } = gradebooksSlice.actions;
 
 export default gradebooksSlice.reducer;

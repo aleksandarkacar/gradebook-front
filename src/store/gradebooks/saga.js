@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import gradebookService from "../../services/GradebookService";
 import {
   performGetAllGradebooks,
+  performGetMoreGradebooks,
   performGetSingleGradebook,
   performAddGradebook,
   performGetMyGradebook,
@@ -17,6 +18,7 @@ import {
   removeStudent,
   performDeleteGradebook,
   resetSingleGradebook,
+  pushMoreGradebooks,
 } from "./slice";
 import { setErrors } from "../errors/slice";
 
@@ -25,6 +27,17 @@ function* getAllGradebooksHandler() {
     const gradebooks = yield call(gradebookService.getAll);
     console.log(gradebooks);
     yield put(setAllGradebooks(gradebooks));
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
+  }
+}
+
+function* getMoreGradebooksHandler({ payload }) {
+  try {
+    const gradebooks = yield call(gradebookService.getMore, payload);
+    console.log(gradebooks.data);
+    yield put(pushMoreGradebooks(gradebooks.data));
   } catch (err) {
     console.log(err);
     yield put(setErrors(err));
@@ -127,6 +140,10 @@ function* deleteGradebookHandeler({ payload }) {
 
 export function* watchGetAllGradebooks() {
   yield takeLatest(performGetAllGradebooks.type, getAllGradebooksHandler);
+}
+
+export function* watchGetMoreGradebooks() {
+  yield takeLatest(performGetMoreGradebooks.type, getMoreGradebooksHandler);
 }
 
 export function* watchGetSingleGradebook() {
