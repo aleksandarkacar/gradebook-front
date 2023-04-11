@@ -32,7 +32,7 @@ export const RegisterPage = () => {
 
   return (
     <div>
-      {errors ? <p>{JSON.stringify(errors.response.data.message)}</p> : null}
+      {errors ? <p>JSON.stringify(errors.response.data.message)</p> : null}
       <h1></h1>
       <h2>Register</h2>
       <form
@@ -54,7 +54,13 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, first_name: target.value })
           }
         />
-        {errors?.first_name && <p>{errors.first_name}</p>}
+
+        {errors?.response?.data?.errors?.first_name && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.first_name[0]}*
+          </li>
+        )}
+
         <input
           required
           value={credentials.last_name}
@@ -63,7 +69,13 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, last_name: target.value })
           }
         />
-        {errors?.last_name && <p>{errors.last_name}</p>}
+
+        {errors?.response?.data?.errors?.last_name && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.last_name[0]}*
+          </li>
+        )}
+
         <div style={{ maxWidth: "500px", margin: "0 auto" }}>
           <input
             required
@@ -79,7 +91,13 @@ export const RegisterPage = () => {
             }
           />
         </div>
-        {errors?.img_url && <p>{errors.img_url}</p>}
+
+        {errors?.response?.data?.errors?.img_url && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.img_url[0]}*
+          </li>
+        )}
+
         <input
           required
           value={credentials.email}
@@ -89,7 +107,13 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, email: target.value })
           }
         />
-        {errors?.email && <p>{errors.email}</p>}
+
+        {errors?.response?.data?.errors?.email && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.email[0]}*
+          </li>
+        )}
+
         <input
           required
           value={credentials.password}
@@ -99,7 +123,13 @@ export const RegisterPage = () => {
             setCredentials({ ...credentials, password: target.value })
           }
         />
-        {errors?.password && <p>{errors.password}</p>}
+
+        {errors?.response?.data?.errors?.password && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.password[0]}*
+          </li>
+        )}
+
         <fieldset>
           <legend>
             Check this box to confirm that you accept the terms and conditions
@@ -118,9 +148,16 @@ export const RegisterPage = () => {
             <label>{credentials.terms_and_conditions}</label>
           </div>
         </fieldset>
-        {errors?.terms_and_conditions && <p>{errors.terms_and_conditions}</p>}
 
-        <button type="submit">Register</button>
+        {errors?.response?.data?.errors?.terms_and_conditions && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.terms_and_conditions[0]}*
+          </li>
+        )}
+
+        <button className="button-link" type="submit">
+          Register
+        </button>
       </form>
     </div>
   );

@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   performAddComment,
-  performDele,
   performDeleteComment,
 } from "../store/gradebooks/slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { errorsSelector } from "../store/errors/selectors";
+import { useEffect } from "react";
+import { performResetErrors } from "../store/errors/slice";
 
 export const DetailedGradebookCard = ({ gradebook }) => {
   const [comment, setComment] = useState({
@@ -14,11 +16,12 @@ export const DetailedGradebookCard = ({ gradebook }) => {
   console.log(gradebook.id, comment);
   const [commentLength, setCommentLength] = useState(0);
   const history = useHistory();
+  const errors = useSelector(errorsSelector);
   const dispatch = useDispatch();
 
-  if (gradebook.length === 0) {
-    return <p>Loading...</p>;
-  }
+  useEffect(() => {
+    return () => dispatch(performResetErrors());
+  }, []);
 
   const userId = localStorage.getItem("userId");
 
@@ -54,15 +57,32 @@ export const DetailedGradebookCard = ({ gradebook }) => {
     }
   };
 
-  console.log(gradebook);
+  console.log(errors?.response.status);
+
+  if (gradebook.length === 0) {
+    if (errors?.response.status === 404) {
+      return (
+        <h2 style={{ listStyleType: "none" }}>You do not have a gradebook</h2>
+      );
+    }
+    return <p>Loading...</p>;
+  }
 
   return (
-    <div>
-      <div>
+    <div style={{ marginBottom: "250px" }}>
+      <div style={{ display: "flex", justifyContent: "flex-start" }}>
         {gradebook.user.id == userId ? (
-          <button class="button-link" onClick={() => goToAddStudents()}>
-            Add Students
-          </button>
+          <div>
+            <button class="button-link" onClick={() => goToAddStudents()}>
+              Add Students
+            </button>
+            <button
+              class="button-link"
+              onClick={() => history.push(`/gradebooks/${gradebook.id}/edit`)}
+            >
+              Edit Gradebook
+            </button>
+          </div>
         ) : null}
       </div>
 
@@ -143,11 +163,23 @@ export const DetailedGradebookCard = ({ gradebook }) => {
               setComment({ ...comment, body: e.target.value });
               setCommentLength(e.target.value.length);
             }}
+            style={{ width: "50%", height: "150px" }}
           />
         </div>
-        {commentLength > -1 ? (
-          <button onClick={handleAddComment}>Submit</button>
-        ) : null}
+        {errors?.response?.data?.errors?.body && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.body[0]}*
+          </li>
+        )}
+
+        <button
+          className={"button-link"}
+          onClick={handleAddComment}
+          style={{ marginegBottom: "300px" }}
+          disabled={!commentLength}
+        >
+          Submit Comment
+        </button>
       </div>
     </div>
   );

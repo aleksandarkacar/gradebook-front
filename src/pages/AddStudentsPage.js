@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { singleGradebookSelector } from "../store/gradebooks/selectors";
 import { performGetSingleGradebook } from "../store/gradebooks/slice";
+import { errorsSelector } from "../store/errors/selectors";
+import { performResetErrors } from "../store/errors/slice";
 
 export const AddStudentPage = () => {
   const params = useParams();
@@ -15,12 +17,13 @@ export const AddStudentPage = () => {
 
   const singleGradebook = useSelector(singleGradebookSelector);
 
+  const errors = useSelector(errorsSelector);
   const dispatch = useDispatch();
+
   const history = useHistory();
-  const lastPage = history.location.state.from;
-  console.log("history", lastPage);
   useEffect(() => {
     handleGetMyGradebook();
+    return () => dispatch(performResetErrors());
   }, []);
 
   const handleGetMyGradebook = () => {
@@ -65,8 +68,12 @@ export const AddStudentPage = () => {
                     onChange={({ target }) =>
                       setNewStudent({ ...newStudent, first_name: target.value })
                     }
-                    required
                   />
+                  {errors?.response?.data?.errors?.first_name && (
+                    <li style={{ color: "red", listStyleType: "none" }}>
+                      *{errors.response.data.errors.first_name[0]}*
+                    </li>
+                  )}
                   <input
                     type="text"
                     className="form-control"
@@ -75,8 +82,12 @@ export const AddStudentPage = () => {
                     onChange={({ target }) =>
                       setNewStudent({ ...newStudent, last_name: target.value })
                     }
-                    required
                   />
+                  {errors?.response?.data?.errors?.last_name && (
+                    <li style={{ color: "red", listStyleType: "none" }}>
+                      *{errors.response.data.errors.last_name[0]}*
+                    </li>
+                  )}
                 </div>
                 <button type="submit" className="btn btn-primary">
                   Add Student

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { errorsSelector } from "../store/errors/selectors";
+import { performResetErrors } from "../store/errors/slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddComment = ({ onCommentAdded }) => {
   const [commentContent, setCommentContent] = useState("");
@@ -6,6 +9,13 @@ const AddComment = ({ onCommentAdded }) => {
   const handleCommentChange = (event) => {
     setCommentContent(event.target.value);
   };
+
+  const errors = useSelector(errorsSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(performResetErrors());
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,8 +34,11 @@ const AddComment = ({ onCommentAdded }) => {
           onChange={handleCommentChange}
         />
       </div>
+
       <div>
-        <button type="submit">Add Comment</button>
+        <button className="button-link" type="submit">
+          Add Comment
+        </button>
       </div>
     </form>
   );

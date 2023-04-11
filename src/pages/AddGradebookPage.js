@@ -3,6 +3,9 @@ import { performAddGradebook } from "../store/gradebooks/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { performGetAvailableTeachers } from "../store/teachers/slice";
 import { availableTeachersSelector } from "../store/teachers/selectors";
+import { errorsSelector } from "../store/errors/selectors";
+import { performResetErrors } from "../store/errors/slice";
+import { useHistory } from "react-router-dom";
 
 export const AddGradebookPage = () => {
   const [newGradebook, setNewGradebook] = useState({
@@ -12,7 +15,9 @@ export const AddGradebookPage = () => {
 
   const availableTeachers = useSelector(availableTeachersSelector);
 
+  const errors = useSelector(errorsSelector);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleGetAvailableTeachers = () => {
     dispatch(performGetAvailableTeachers());
@@ -20,15 +25,21 @@ export const AddGradebookPage = () => {
 
   useEffect(() => {
     handleGetAvailableTeachers();
+    return () => dispatch(performResetErrors());
   }, []);
 
   const handleGradebookSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(performAddGradebook(newGradebook));
+    dispatch(
+      performAddGradebook({
+        data: newGradebook,
+        redirect: () => {
+          history.goBack();
+        },
+      })
+    );
   };
-
-
 
   return (
     <div>
@@ -47,9 +58,13 @@ export const AddGradebookPage = () => {
                   onChange={({ target }) =>
                     setNewGradebook({ ...newGradebook, name: target.value })
                   }
-                  required
                 />
                 <div>
+                  {errors?.response?.data?.errors?.name && (
+                    <li style={{ color: "red", listStyleType: "none" }}>
+                      *{errors.response.data.errors.name[0]}*
+                    </li>
+                  )}
                   <label htmlFor="teacher_id">Select a teacher:</label>
                   <select
                     onChange={(e) =>
@@ -68,6 +83,11 @@ export const AddGradebookPage = () => {
                       </option>
                     ))}
                   </select>
+                  {errors?.response?.data?.errors?.user_id && (
+                    <li style={{ color: "red", listStyleType: "none" }}>
+                      *{errors.response.data.errors.user_id[0]}*
+                    </li>
+                  )}
                 </div>
                 <label>
                   Currently selected user ID: {newGradebook.user_id}

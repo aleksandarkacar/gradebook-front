@@ -20,6 +20,7 @@ import { AddGradebookPage } from "./pages/AddGradebookPage";
 import { SingleProfessorPage } from "./pages/SingleProfessorPage";
 import { SingleGradebookPage } from "./pages/SingleGradebookPage";
 import { AddStudentPage } from "./pages/AddStudentsPage";
+import { EditGradebookPage } from "./pages/EditGradebookPage";
 
 export const Router = () => {
   const dispatch = useDispatch();
@@ -51,12 +52,12 @@ export const Router = () => {
         <nav className="navbar">
           {!isAuthenticated && (
             <Link to={"/login"}>
-              <button class="button-link">Login</button>
+              <button class="button-link">Login Page</button>
             </Link>
           )}
           {!isAuthenticated && (
             <Link to={"/register"}>
-              <button class="button-link">Register</button>
+              <button class="button-link">Register Page</button>
             </Link>
           )}
           {isAuthenticated && (
@@ -113,8 +114,11 @@ export const Router = () => {
           <PrivateRoute exact path={"/teachers/:id"}>
             <SingleProfessorPage />
           </PrivateRoute>
-          <PrivateRoute path={"/gradebooks/:id/students/create"}>
+          <PrivateRoute exact path={"/gradebooks/:id/students/create"}>
             <AddStudentPage />
+          </PrivateRoute>
+          <PrivateRoute exact path={"/gradebooks/:id/edit"}>
+            <EditGradebookPage />
           </PrivateRoute>
         </Switch>
       </BrowserRouter>

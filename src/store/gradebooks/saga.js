@@ -12,6 +12,7 @@ import {
   pushNewComment,
   performDeleteComment,
   removeComment,
+  performEditGradebook,
 } from "./slice";
 import { setErrors } from "../errors/slice";
 
@@ -48,7 +49,19 @@ function* getMyGradebookHandler() {
 
 function* addGradebookHandler({ payload }) {
   try {
-    yield call(gradebookService.add, payload);
+    yield call(gradebookService.add, payload.data);
+    payload.redirect();
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
+  }
+}
+
+function* editGradebookHandler({ payload }) {
+  try {
+    console.log(payload);
+    yield call(gradebookService.edit, payload.data.id, payload.data);
+    payload.redirect();
   } catch (err) {
     console.log(err);
     yield put(setErrors(err));
@@ -96,6 +109,10 @@ export function* watchGetSingleGradebook() {
 
 export function* watchAddGradebook() {
   yield takeLatest(performAddGradebook.type, addGradebookHandler);
+}
+
+export function* watcheditGradebook() {
+  yield takeLatest(performEditGradebook.type, editGradebookHandler);
 }
 
 export function* watchGetMyGradebook() {

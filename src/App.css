@@ -179,3 +179,13 @@ a:focus{
 a:active{
   color: black;
 }
+
+button[disabled] {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+}
+
+.button-link:disabled:hover {
+  background-color: gray;
+}

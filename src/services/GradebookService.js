@@ -24,6 +24,11 @@ class GradebookService {
     return response.data;
   };
 
+  edit = async (id, editedGradebook) => {
+    const response = await this.axios.put(`/gradebooks/${id}`, editedGradebook);
+    return response.data;
+  };
+
   search = async (name) => {
     const response = await this.axios.get(`/gradebooks?name=${name}`);
     return response.data;
@@ -31,6 +36,11 @@ class GradebookService {
 
   addStudent = async (student) => {
     const response = await this.axios.post(`/students`, student);
+    return response.data;
+  };
+
+  deleteStudent = async (id) => {
+    const response = await this.axios.post(`/students`, id);
     return response.data;
   };
 

@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { performLogin } from "../store/auth/slice";
+import { errorsSelector } from "../store/errors/selectors";
+import { performResetErrors } from "../store/errors/slice";
 
 export const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
+
+  const errors = useSelector(errorsSelector);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(performResetErrors());
+  }, []);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    setInvalidCredentials(false);
 
-    try {
-      dispatch(performLogin(credentials));
-    } catch {
-      setInvalidCredentials(true);
-      alert("invalid credentials");
-    }
-    console.log("logged in successfully");
+    dispatch(performLogin(credentials));
   };
 
   return (
@@ -35,7 +35,6 @@ export const LoginPage = () => {
         onSubmit={handleLoginSubmit}
       >
         <input
-          required
           value={credentials.email}
           type="email"
           placeholder="Email"
@@ -43,8 +42,14 @@ export const LoginPage = () => {
             setCredentials({ ...credentials, email: target.value })
           }
         />
+
+        {errors?.response?.data?.errors?.email && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.email[0]}*
+          </li>
+        )}
+
         <input
-          required
           value={credentials.password}
           type="password"
           placeholder="Password"
@@ -52,10 +57,20 @@ export const LoginPage = () => {
             setCredentials({ ...credentials, password: target.value })
           }
         />
-        {invalidCredentials && (
-          <p style={{ color: "red" }}>Invalid credentials</p>
+
+        {errors?.response?.data?.errors?.password && (
+          <li style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.errors.password[0]}*
+          </li>
         )}
-        <button>Login</button>
+
+        {errors ? (
+          <p style={{ color: "red", listStyleType: "none" }}>
+            *{errors.response.data.message}*
+          </p>
+        ) : null}
+
+        <button className="button-link">Login</button>
       </form>
     </div>
   );
