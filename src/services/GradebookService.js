@@ -40,7 +40,7 @@ class GradebookService {
   };
 
   deleteStudent = async (id) => {
-    const response = await this.axios.post(`/students`, id);
+    const response = await this.axios.delete(`/students/${id}`);
     return response.data;
   };
 

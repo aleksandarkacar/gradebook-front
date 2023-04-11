@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { errorsSelector } from "../store/errors/selectors";
 import { useEffect } from "react";
 import { performResetErrors } from "../store/errors/slice";
+import { StudentCard } from "./SingleStudentCard";
 
 export const DetailedGradebookCard = ({ gradebook }) => {
   const [comment, setComment] = useState({
@@ -122,14 +123,12 @@ export const DetailedGradebookCard = ({ gradebook }) => {
 
         <hr />
         <h3>Students</h3>
-        {gradebook.students.length > 0 ? (
-          <ul style={{ listStyleType: "none" }}>
+        {gradebook?.students?.length > 0 ? (
+          <div className="card-container">
             {gradebook.students.map((student) => (
-              <li key={student.id}>
-                {student.first_name} {student.last_name}
-              </li>
+              <StudentCard key={student.id} student={student} />
             ))}
-          </ul>
+          </div>
         ) : (
           <p>No students found.</p>
         )}

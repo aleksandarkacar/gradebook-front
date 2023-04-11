@@ -10,6 +10,7 @@ import { errorsSelector } from "../store/errors/selectors";
 import { performResetErrors } from "../store/errors/slice";
 import { useHistory, useParams } from "react-router-dom";
 import { singleGradebookSelector } from "../store/gradebooks/selectors";
+import { DeleteStudentCard } from "../components/DeleteStudentCard";
 
 export const EditGradebookPage = () => {
   const params = useParams();
@@ -125,13 +126,26 @@ export const EditGradebookPage = () => {
                   Currently selected user ID: {editedGradebook.user_id}
                 </label>
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="button-link">
                 Submit Edit
               </button>
             </form>
           </div>
         </div>
       </div>
+
+      <hr></hr>
+      <h3>Students</h3>
+
+      {gradebook?.students?.length > 0 ? (
+        <div className="card-container">
+          {gradebook.students.map((student) => (
+            <DeleteStudentCard key={student.id} student={student} />
+          ))}
+        </div>
+      ) : (
+        <p>No students found.</p>
+      )}
     </div>
   );
 };

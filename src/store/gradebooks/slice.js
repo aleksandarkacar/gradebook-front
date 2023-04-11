@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const middlewareActions = {
   performGetAllGradebooks: () => {},
   performGetSingleGradebook: () => {},
-  performAddGradebook: () => {},
   performGetMyGradebook: () => {},
+  performAddGradebook: () => {},
   performAddStudent: () => {},
   performAddComment: () => {},
-  performDeleteComment: () => {},
   performEditGradebook: () => {},
+  performDeleteStudent: () => {},
+  performDeleteComment: () => {},
 };
 
 const gradebooksSlice = createSlice({
@@ -45,6 +46,15 @@ const gradebooksSlice = createSlice({
         state.singleGradebook.comments.splice(index, 1);
       }
     },
+    removeStudent: (state, action) => {
+      const studentId = action.payload;
+      const index = state.singleGradebook.students.findIndex(
+        (student) => student.id === studentId
+      );
+      if (index !== -1) {
+        state.singleGradebook.students.splice(index, 1);
+      }
+    },
     ...middlewareActions,
   },
 });
@@ -63,6 +73,8 @@ export const {
   performDeleteComment,
   removeComment,
   performEditGradebook,
+  performDeleteStudent,
+  removeStudent,
 } = gradebooksSlice.actions;
 
 export default gradebooksSlice.reducer;

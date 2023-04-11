@@ -13,6 +13,8 @@ import {
   performDeleteComment,
   removeComment,
   performEditGradebook,
+  performDeleteStudent,
+  removeStudent,
 } from "./slice";
 import { setErrors } from "../errors/slice";
 
@@ -99,6 +101,16 @@ function* deleteCommentHandeler({ payload }) {
   }
 }
 
+function* deleteStudentHandeler({ payload }) {
+  try {
+    yield call(gradebookService.deleteStudent, payload);
+    yield put(removeStudent(payload));
+  } catch (err) {
+    console.log(err);
+    yield put(setErrors(err));
+  }
+}
+
 export function* watchGetAllGradebooks() {
   yield takeLatest(performGetAllGradebooks.type, getAllGradebooksHandler);
 }
@@ -129,4 +141,8 @@ export function* watchAddComment() {
 
 export function* watchDeleteComment() {
   yield takeLatest(performDeleteComment.type, deleteCommentHandeler);
+}
+
+export function* watchDeleteStudent() {
+  yield takeLatest(performDeleteStudent.type, deleteStudentHandeler);
 }
