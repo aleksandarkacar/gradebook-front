@@ -33,8 +33,6 @@ export const HomePage = () => {
     setCurrentPage(1);
   };
 
-  console.log(currentPage, gradebooks.last_page);
-
   return (
     <div style={{ marginBottom: "400px" }}>
       <h1>Gradebooks HomePage:</h1>

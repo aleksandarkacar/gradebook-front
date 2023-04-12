@@ -6,7 +6,6 @@ import { DetailedGradebookCard } from "../components/DetailedGradebookCard";
 
 export const MyGradebookPage = () => {
   const gradebook = useSelector(singleGradebookSelector);
-  console.log(gradebook);
 
   const dispatch = useDispatch();
 

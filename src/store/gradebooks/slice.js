@@ -35,7 +35,6 @@ const gradebooksSlice = createSlice({
       state.data.push(action.payload);
     },
     pushMoreGradebooks: (state, action) => {
-      console.log(action.payload);
       state.data.data = [...state.data.data, ...action.payload];
     },
     pushNewComment: (state, action) => {

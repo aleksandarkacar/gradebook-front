@@ -26,7 +26,6 @@ import { resetErrors, setErrors } from "../errors/slice";
 function* getAllGradebooksHandler() {
   try {
     const gradebooks = yield call(gradebookService.getAll);
-    console.log(gradebooks);
     yield put(setAllGradebooks(gradebooks));
   } catch (err) {
     console.log(err);
@@ -37,7 +36,6 @@ function* getAllGradebooksHandler() {
 function* getMoreGradebooksHandler({ payload }) {
   try {
     const gradebooks = yield call(gradebookService.getMore, payload);
-    console.log(gradebooks.data);
     yield put(pushMoreGradebooks(gradebooks.data));
   } catch (err) {
     console.log(err);
@@ -47,9 +45,7 @@ function* getMoreGradebooksHandler({ payload }) {
 
 function* searchGradebooksHandler({ payload }) {
   try {
-    console.log(payload);
     const gradebooks = yield call(gradebookService.search, payload);
-    console.log(gradebooks);
     yield put(setAllGradebooks(gradebooks));
   } catch (err) {
     console.log(err);
@@ -89,7 +85,6 @@ function* addGradebookHandler({ payload }) {
 
 function* editGradebookHandler({ payload }) {
   try {
-    console.log(payload);
     yield call(gradebookService.edit, payload.data.id, payload.data);
     payload.redirect();
   } catch (err) {
@@ -100,7 +95,6 @@ function* editGradebookHandler({ payload }) {
 
 function* addStudentHandler({ payload }) {
   try {
-    console.log(payload);
     yield call(gradebookService.addStudent, payload.data);
     payload.redirect();
   } catch (err) {
@@ -142,7 +136,6 @@ function* deleteStudentHandeler({ payload }) {
 
 function* deleteGradebookHandeler({ payload }) {
   try {
-    console.log(payload.data);
     yield call(gradebookService.delete, payload.data);
     yield put(resetSingleGradebook());
     payload.redirect();

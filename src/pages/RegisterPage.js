@@ -155,7 +155,6 @@ export const RegisterPage = () => {
                   ...credentials,
                   terms_and_conditions: !credentials.terms_and_conditions,
                 });
-                console.log(credentials);
               }}
             />
             <label>{credentials.terms_and_conditions}</label>

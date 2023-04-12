@@ -33,7 +33,6 @@ export const AddStudentPage = () => {
 
   const handleStudentSubmit = (e) => {
     e.preventDefault();
-    // console.log(history.location.state.from);
     const from = history?.location?.state?.from;
     if (from == undefined) {
       dispatch(
@@ -53,16 +52,7 @@ export const AddStudentPage = () => {
         },
       })
     );
-
-    // history.goBack();
-    // if (lastPage) {
-    //   history.push(lastPage);
-    // } else {
-    //   history.push(`/gradebooks/${params.id}`); //TODO history ponekad ne pushuje ne znam zasto, samo ga vrati na istu AddStudentsPage stranu
-    // }
   };
-
-  console.log(history.location.state);
 
   return (
     <div>

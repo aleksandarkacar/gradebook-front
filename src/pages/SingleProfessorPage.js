@@ -7,9 +7,7 @@ import { performGetSingleTeacher } from "../store/teachers/slice";
 
 export const SingleProfessorPage = () => {
   const params = useParams();
-  console.log(params);
   const teacher = useSelector(singleTeacherSelector);
-  console.log(teacher);
 
   const dispatch = useDispatch();
 

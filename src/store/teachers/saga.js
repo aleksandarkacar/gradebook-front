@@ -14,7 +14,6 @@ import { setErrors } from "../errors/slice";
 function* getAllTeachersHandler() {
   try {
     const teachers = yield call(teacherService.getAll);
-    console.log(teachers);
     yield put(setAllTeachers(teachers));
   } catch (err) {
     console.log(err);
@@ -24,7 +23,6 @@ function* getAllTeachersHandler() {
 
 function* filterTeachersHandler({ payload }) {
   try {
-    console.log(payload);
     const teachers = yield call(
       teacherService.search,
       payload.filterFirstName,
@@ -40,7 +38,6 @@ function* filterTeachersHandler({ payload }) {
 function* getSingleTeacherHandler({ payload }) {
   try {
     const teacher = yield call(teacherService.get, payload);
-    console.log(teacher);
     yield put(setSingleTeacher(teacher));
   } catch (err) {
     console.log(err);
@@ -51,7 +48,6 @@ function* getSingleTeacherHandler({ payload }) {
 function* getAvailableTeachersHandler() {
   try {
     const availableTeachers = yield call(teacherService.getAvailable);
-    console.log(availableTeachers);
     yield put(setAvailableTeachers(availableTeachers));
   } catch (err) {
     console.log(err);

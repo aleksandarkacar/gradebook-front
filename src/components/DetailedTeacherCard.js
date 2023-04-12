@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import React from "react";
 
 export const DetailedTeacherCard = ({ teacher }) => {
-  console.log(teacher, "Detailed teacher card first entry");
   if (teacher.length === 0) {
     return <p>Loading...</p>;
   }

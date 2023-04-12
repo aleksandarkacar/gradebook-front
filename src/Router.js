@@ -32,7 +32,6 @@ export const Router = () => {
 
   useEffect(() => {
     setIsAuthenticated(!!localStorage.getItem("token"));
-    console.log(isAuthenticated);
     if (isAuthenticated) {
       // history.push("/");
     } else {

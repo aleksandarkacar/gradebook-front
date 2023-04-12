@@ -45,10 +45,8 @@ export const EditGradebookPage = () => {
 
   const handleGradebookSubmit = (e) => {
     e.preventDefault();
-    console.log(editedGradebook.user_id == localStorage.getItem("userId"));
     if (editedGradebook.user_id == localStorage.getItem("userId")) {
       const { user_id, ...editedGradebookNoUID } = editedGradebook;
-      console.log(editedGradebookNoUID);
       dispatch(
         performEditGradebook({
           data: { ...editedGradebookNoUID },

@@ -8,9 +8,7 @@ import { Link } from "react-router-dom";
 
 export const SingleGradebookPage = () => {
   const params = useParams();
-  console.log(params);
   const gradebook = useSelector(singleGradebookSelector);
-  console.log(gradebook);
 
   const dispatch = useDispatch();
 
