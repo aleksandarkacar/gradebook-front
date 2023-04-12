@@ -21,7 +21,7 @@ import {
   pushMoreGradebooks,
   performSearchGradebooks,
 } from "./slice";
-import { setErrors } from "../errors/slice";
+import { resetErrors, setErrors } from "../errors/slice";
 
 function* getAllGradebooksHandler() {
   try {
@@ -113,6 +113,7 @@ function* addCommentHandler({ payload }) {
   try {
     const comment = yield call(gradebookService.addComment, payload);
     yield put(pushNewComment(comment));
+    yield put(resetErrors());
   } catch (err) {
     console.log(err);
     yield put(setErrors(err));

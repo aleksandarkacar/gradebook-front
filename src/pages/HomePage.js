@@ -43,11 +43,15 @@ export const HomePage = () => {
         onChange={(e) => setFilter(e.target.value)}
       ></input>
       <button onClick={() => handleFilter()}>Filter</button>
-      <div className="card-container">
-        {gradebooks?.data?.map((gradebook) => (
-          <GradebookCard key={gradebook.id} gradebook={gradebook} />
-        ))}
-      </div>
+      {gradebooks?.data?.length === 0 ? (
+        <h3>No Gradebooks available</h3>
+      ) : (
+        <div className="card-container">
+          {gradebooks?.data?.map((gradebook) => (
+            <GradebookCard key={gradebook.id} gradebook={gradebook} />
+          ))}
+        </div>
+      )}
       {currentPage + 1 <= gradebooks.last_page ? (
         <button className="button-link" onClick={() => handleLoadMore()}>
           Load More

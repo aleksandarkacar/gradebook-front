@@ -13,7 +13,10 @@ export const TeacherCard = ({ teacher }) => {
       <div className="card-body">
         <h5 className="card-title">
           <Link to={`/teachers/${teacher.id}`}>
-            <button className="button-link">
+            <button
+              style={{ margin: "20px", backgroundColor: "purple" }}
+              className="button-link"
+            >
               {teacher.first_name} {teacher.last_name}
             </button>
           </Link>

@@ -81,8 +81,6 @@ export const DetailedGradebookCard = ({ gradebook }) => {
     }
   };
 
-  console.log(errors?.response.status);
-
   if (gradebook.length === 0) {
     return <p>Loading...</p>;
   }
@@ -92,18 +90,21 @@ export const DetailedGradebookCard = ({ gradebook }) => {
       {gradebook.user.id == userId ? (
         <div style={{ display: "flex" }}>
           <div style={{ marginRight: "auto" }}>
-            <button class="button-link" onClick={() => goToAddStudents()}>
+            <button className="button-link" onClick={() => goToAddStudents()}>
               Add Students
             </button>
             <button
-              class="button-link"
+              className="button-link"
               onClick={() => history.push(`/gradebooks/${gradebook.id}/edit`)}
             >
               Edit Gradebook
             </button>
           </div>
           <div style={{ justifyContent: "right" }}>
-            <button class="button-link" onClick={() => handleDeleteGradebook()}>
+            <button
+              className="button-link"
+              onClick={() => handleDeleteGradebook()}
+            >
               Delete Gradebook
             </button>
           </div>
@@ -161,16 +162,20 @@ export const DetailedGradebookCard = ({ gradebook }) => {
           <div className="card-container">
             {gradebook.comments.map((comment) => (
               <div className="card" key={comment.id}>
-                <h5 className="card-title">
-                  {comment.user?.first_name} {comment.user?.last_name} says:{" "}
+                <h3>
+                  {comment.user?.first_name} {comment.user?.last_name} says:
+                </h3>
+                <h5 style={{ margin: "20px" }} className="card-text">
                   {comment.body}
                 </h5>
-                <button
-                  className="button-link"
-                  onClick={() => handleDeleteComment(comment.id)}
-                >
-                  Delete Comment
-                </button>
+                {comment.user_id == localStorage.getItem("userId") ? (
+                  <button
+                    className="button-link"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  >
+                    Delete Comment
+                  </button>
+                ) : null}
               </div>
             ))}
           </div>

@@ -27,15 +27,15 @@ export const DetailedTeacherCard = ({ teacher }) => {
         <div className="card-body">
           {teacher.gradebook ? (
             <div>
-              <div>{teacher.gradebook.name}</div>
+              <div style={{ marginBottom: "20px" }}>
+                Gradebook name: {teacher.gradebook.name}
+              </div>
+              <div style={{ marginBottom: "20px" }}>
+                Students: {teacher.gradebook.students.length}
+              </div>
               <div className="card-text">
-                {teacher.gradebook.first_name && teacher.gradebook.last_name ? (
-                  <p className="card-title">
-                    {teacher.gradebook.first_name} {teacher.gradebook.last_name}
-                  </p>
-                ) : null}
                 <Link to={`/gradebooks/${teacher.gradebook.id}`}>
-                  <button class="button-link">View Gradebook</button>
+                  <button className="button-link">View Gradebook</button>
                 </Link>
               </div>
             </div>

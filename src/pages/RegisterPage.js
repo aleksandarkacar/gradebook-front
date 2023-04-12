@@ -13,6 +13,7 @@ export const RegisterPage = () => {
       img_url: "",
       email: "",
       password: "",
+      password_confirmation: "",
       terms_and_conditions: false,
     },
     []
@@ -32,7 +33,6 @@ export const RegisterPage = () => {
 
   return (
     <div>
-      {errors ? <p>JSON.stringify(errors.response.data.message)</p> : null}
       <h1></h1>
       <h2>Register</h2>
       <form
@@ -82,7 +82,7 @@ export const RegisterPage = () => {
             value={credentials.img_url}
             style={
               {
-                //   minWidth: `${credentials.img_url.length}ch`,
+                // maxWidth: `${credentials.img_url.length}ch`,
               }
             }
             placeholder="img url"
@@ -121,6 +121,19 @@ export const RegisterPage = () => {
           placeholder="Password"
           onChange={({ target }) =>
             setCredentials({ ...credentials, password: target.value })
+          }
+        />
+
+        <input
+          required
+          value={credentials.password_confirmation}
+          type="password"
+          placeholder="Confirm Password"
+          onChange={({ target }) =>
+            setCredentials({
+              ...credentials,
+              password_confirmation: target.value,
+            })
           }
         />
 
